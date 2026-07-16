@@ -1,0 +1,483 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GRAPHODO | Master Your Time, Visualize Your Growth</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#2a1700",
+                    "inverse-surface": "#2a322a",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#22c55e",
+                    "secondary-fixed": "#d8e2ff",
+                    "tertiary-container": "#ef9900",
+                    "surface-container-low": "#edf6ea",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "primary-fixed-dim": "#4ae176",
+                    "surface-container": "#e8f0e4",
+                    "tertiary": "#855300",
+                    "surface-dim": "#d4ddd0",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-background": "#161d16",
+                    "on-primary-container": "#004b1e",
+                    "surface-tint": "#006e2f",
+                    "primary-fixed": "#6bff8f",
+                    "on-surface-variant": "#3d4a3d",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#5c3800",
+                    "outline": "#6d7b6c",
+                    "on-primary-fixed": "#002109",
+                    "surface-container-highest": "#dce5d9",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#001a42",
+                    "on-secondary-container": "#fefcff",
+                    "outline-variant": "#bccbb9",
+                    "surface": "#f3fcef",
+                    "inverse-on-surface": "#ebf3e7",
+                    "on-primary-fixed-variant": "#005321",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "background": "#f3fcef",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#004395",
+                    "surface-container-high": "#e2ebde",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#161d16",
+                    "inverse-primary": "#4ae176",
+                    "primary": "#006e2f",
+                    "surface-variant": "#dce5d9",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f3fcef",
+                    "secondary-container": "#2170e4",
+                    "secondary": "#0058be"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "2xl": "64px",
+                    "margin-desktop": "48px",
+                    "base": "4px",
+                    "margin-mobile": "16px",
+                    "sm": "8px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "display": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "mono": ["Geist"]
+            },
+            "fontSize": {
+                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "mono": ["13px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f3fcef;
+            color: #161d16;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at center, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+        }
+        .transition-soft {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-gutter md:px-margin-desktop bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<span class="font-headline-md text-headline-md font-black tracking-tighter text-primary">GRAPHODO</span>
+</div>
+<div class="hidden md:flex items-center gap-xl">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Features</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Login</a>
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg font-label-sm text-label-sm font-semibold hover:bg-surface-tint transition-soft shadow-sm">
+                Get Started
+            </button>
+</div>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-xl px-gutter md:px-margin-desktop overflow-hidden">
+<!-- Ambient Shader Background -->
+<!-- STITCH_SHADER_START:ANIMATION_3 class="absolute inset-0 w-full h-full opacity-40 mix-blend-multiply" -->
+<div class="absolute inset-0 w-full h-full opacity-40 mix-blend-multiply" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_3" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_3');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+void main() {
+    vec2 uv = v_texCoord;
+    
+    // Create a soft, slow-moving mesh of green and blue
+    float noise = sin(uv.x * 3.0 + u_time * 0.5) * cos(uv.y * 3.0 + u_time * 0.4);
+    noise += sin(uv.x * 2.0 - u_time * 0.3) * cos(uv.y * 4.0 + u_time * 0.2);
+    
+    vec3 color1 = vec3(0.13, 0.77, 0.37); // Brand Green #22C55E
+    vec3 color2 = vec3(0.23, 0.51, 0.96); // Accent Blue #3B82F6
+    vec3 bgColor = vec3(0.95, 0.98, 0.94); // Light Surface
+    
+    float mixFactor = clamp(noise * 0.5 + 0.5, 0.0, 1.0);
+    vec3 finalColor = mix(color1, color2, mixFactor);
+    
+    // Faint overlay for a "premium" feel
+    gl_FragColor = vec4(mix(bgColor, finalColor, 0.08), 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_3 -->
+<div class="relative z-10 text-center max-w-4xl mx-auto mb-2xl">
+<div class="inline-flex items-center gap-sm bg-primary/10 border border-primary/20 px-sm py-1 rounded-full mb-md animate-fade-in">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">New: Animated Velocity Insights</span>
+</div>
+<h1 class="font-display text-display md:text-[72px] mb-md leading-none tracking-tight text-on-background">
+                Master Your Time, <br>
+<span class="text-primary italic">Visualize Your Growth.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-xl leading-relaxed">
+                The high-performance workspace designed for builders. Track tasks, build lasting habits, and see your progress through beautiful, data-driven analytics.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-md">
+<button class="w-full sm:w-auto bg-primary text-on-primary px-xl py-md rounded-xl font-headline-md text-headline-md flex items-center justify-center gap-sm hover:scale-[1.02] active:scale-[0.98] transition-soft shadow-lg shadow-primary/20">
+                    Get Started for Free
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full sm:w-auto glass-panel text-on-surface px-xl py-md rounded-xl font-headline-md text-headline-md border border-outline-variant hover:bg-surface-container transition-soft">
+                    Book a Demo
+                </button>
+</div>
+</div>
+<!-- Dashboard Preview -->
+<div class="relative z-10 w-full max-w-6xl mx-auto mt-xl">
+<div class="relative rounded-2xl overflow-hidden border border-outline-variant shadow-2xl bg-surface-container-low group">
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+<img alt="Graphodo Dashboard Interface" class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSaSOndiNskBGAC_LlvzFy1NGhPzXTyG5KSQiBJ1BzR0UHOSslxdv5OkVuckpKB9ZeWVWei0SvTxM2-ff6Is7sUi3gbxcSeqq74IE6RyBif0e2koK3qN5IFDXAYigJOAwvl5oX9PNocx-r9GRTr1RN07DZE84FK-ojWeA0duLd1bwXQy41BEsyhEBU9tTSyKXmgi7jSB0A-n9W1jr7q8oM44IxzYuglsAD7GjDk4Scg4zYkN937cE">
+<!-- Floating Glass Elements for added depth -->
+<div class="absolute top-8 right-8 glass-panel p-md rounded-xl shadow-xl hidden md:block animate-bounce-slow">
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-sm text-label-sm font-bold">Velocity: +14%</span>
+</div>
+<div class="w-32 h-1.5 bg-outline-variant rounded-full overflow-hidden">
+<div class="w-[70%] h-full bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Features Bento Grid -->
+<section class="py-2xl px-gutter md:px-margin-desktop bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+<div class="mb-xl text-center">
+<h2 class="font-headline-lg text-headline-lg mb-sm">Everything you need to ship faster.</h2>
+<p class="text-on-surface-variant font-body-lg">Powerful tools, intentionally designed to stay out of your way.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md h-auto md:h-[600px]">
+<!-- Main Feature -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-2xl border border-outline-variant bg-white p-lg flex flex-col justify-between hover:shadow-lg transition-soft">
+<div class="relative z-10">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary mb-md">
+<span class="material-symbols-outlined">leaderboard</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs">Animated Analytics</h3>
+<p class="text-on-surface-variant max-w-md">Real-time visualization of your productivity peaks and valleys. Deep-dive into weekly velocity charts that update as you work.</p>
+</div>
+<div class="mt-xl relative h-full w-full rounded-lg overflow-hidden border border-outline-variant bg-surface-container">
+<div class="absolute inset-0 p-md">
+<div class="flex items-end gap-sm h-full">
+<div class="w-full bg-primary/20 rounded-t-sm animate-pulse" style="height: 40%;"></div>
+<div class="w-full bg-primary/40 rounded-t-sm" style="height: 65%;"></div>
+<div class="w-full bg-primary/60 rounded-t-sm animate-pulse" style="height: 50%;"></div>
+<div class="w-full bg-primary/80 rounded-t-sm" style="height: 85%;"></div>
+<div class="w-full bg-primary rounded-t-sm" style="height: 100%;"></div>
+<div class="w-full bg-primary/40 rounded-t-sm" style="height: 60%;"></div>
+<div class="w-full bg-primary/20 rounded-t-sm" style="height: 30%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary 1 -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-2xl border border-outline-variant bg-white p-lg flex flex-col hover:shadow-lg transition-soft">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/10 flex items-center justify-center text-secondary mb-md">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs">Unified Tasks</h3>
+<p class="text-on-surface-variant mb-xl">Sync your Jira, Linear, and GitHub tasks in one clean view. No more tab hopping.</p>
+<div class="mt-auto space-y-sm">
+<div class="flex items-center gap-sm p-sm rounded-lg bg-surface-container-low border border-outline-variant">
+<span class="material-symbols-outlined text-sm text-outline">circle</span>
+<span class="font-label-sm text-label-sm">Refactor Authentication API</span>
+</div>
+<div class="flex items-center gap-sm p-sm rounded-lg bg-surface-container-low border border-outline-variant">
+<span class="material-symbols-outlined text-sm text-outline">circle</span>
+<span class="font-label-sm text-label-sm">Update Design Tokens</span>
+</div>
+</div>
+</div>
+<!-- Secondary 2 -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-2xl border border-outline-variant bg-white p-lg flex flex-col hover:shadow-lg transition-soft">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-tertiary mb-md">
+<span class="material-symbols-outlined">repeat</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs">Habit Streaks</h3>
+<p class="text-on-surface-variant">Gamify your discipline. Visual feedback on your longest streaks to keep you motivated every day.</p>
+<div class="flex gap-2 mt-md">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold">M</div>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold">T</div>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold">W</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant text-[10px]">T</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant text-[10px]">F</div>
+</div>
+</div>
+<!-- Secondary 3 -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-2xl border border-outline-variant bg-inverse-surface p-lg text-white flex flex-col justify-between hover:shadow-lg transition-soft">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md mb-xs">Command Palette</h3>
+<p class="text-surface-variant max-w-sm">Press <kbd class="px-1.5 py-0.5 rounded border border-outline bg-surface-variant text-on-surface font-mono">⌘ K</kbd> to execute any action instantly. Zero latency productivity.</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-primary-fixed opacity-50">keyboard_command_key</span>
+</div>
+<div class="mt-md bg-white/5 rounded-lg p-sm font-mono text-label-sm text-surface-variant border border-white/10">
+                        &gt; /create_task "Fix header layout" --today
+                    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof / Logotypes -->
+<section class="py-xl px-gutter md:px-margin-desktop border-y border-outline-variant/30">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-xl opacity-40 grayscale hover:grayscale-0 transition-soft">
+<span class="font-headline-md font-bold tracking-tight">VERTEX</span>
+<span class="font-headline-md font-bold tracking-tight">NEXUS</span>
+<span class="font-headline-md font-bold tracking-tight">PRISM</span>
+<span class="font-headline-md font-bold tracking-tight">LUMINA</span>
+<span class="font-headline-md font-bold tracking-tight">QUANTUM</span>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="relative py-2xl px-gutter md:px-margin-desktop overflow-hidden bg-surface">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] hero-glow opacity-30"></div>
+<div class="relative z-10 max-w-3xl mx-auto text-center">
+<h2 class="font-display text-display mb-md">Ready to visualize your growth?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl">Join 50,000+ creators and builders who have leveled up their productivity with Graphodo.</p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-md">
+<button class="bg-primary text-on-primary px-xl py-md rounded-xl font-headline-md text-headline-md hover:shadow-xl hover:scale-[1.02] transition-soft">
+                    Get Started for Free
+                </button>
+<div class="text-label-sm text-on-surface-variant">No credit card required. Cancel anytime.</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-xl px-gutter md:px-margin-desktop border-t border-outline-variant bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-xl">
+<div class="col-span-2 md:col-span-1">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-6 h-6 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+</div>
+<span class="font-headline-md text-headline-md font-black tracking-tighter text-primary">GRAPHODO</span>
+</div>
+<p class="text-on-surface-variant text-body-md mb-md">The modern standard for high-performance productivity.</p>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">public</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">alternate_email</span>
+</div>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm font-bold mb-md uppercase tracking-wider">Product</h4>
+<ul class="space-y-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Features</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Integrations</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Enterprise</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm font-bold mb-md uppercase tracking-wider">Resources</h4>
+<ul class="space-y-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Documentation</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Guides</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">API Status</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Community</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm font-bold mb-md uppercase tracking-wider">Company</h4>
+<ul class="space-y-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-2xl pt-lg border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-md">
+<span class="text-label-sm text-on-surface-variant">© 2024 GRAPHODO. All rights reserved.</span>
+<div class="flex gap-lg">
+<span class="text-label-sm text-on-surface-variant hover:text-primary cursor-pointer">Privacy Policy</span>
+<span class="text-label-sm text-on-surface-variant hover:text-primary cursor-pointer">Terms of Service</span>
+<span class="text-label-sm text-on-surface-variant hover:text-primary cursor-pointer">Cookie Settings</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the navigation on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm');
+                nav.classList.add('bg-white/95');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.remove('bg-white/95');
+            }
+        });
+
+        // Simple entrance animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('section > div').forEach(el => {
+                el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+                observer.observe(el);
+            });
+        });
+    </script>
+</body></html>

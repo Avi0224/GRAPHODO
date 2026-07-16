@@ -1,0 +1,468 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GRAPHODO | Task Management</title>
+<!-- Font Inter & Geist (Geist via CDN if available, else Sans) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-surface": "#2a322a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#22c55e",
+                        "secondary-fixed": "#d8e2ff",
+                        "tertiary-container": "#ef9900",
+                        "surface-container-low": "#edf6ea",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "primary-fixed-dim": "#4ae176",
+                        "surface-container": "#e8f0e4",
+                        "tertiary": "#855300",
+                        "surface-dim": "#d4ddd0",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-background": "#161d16",
+                        "on-primary-container": "#004b1e",
+                        "surface-tint": "#006e2f",
+                        "primary-fixed": "#6bff8f",
+                        "on-surface-variant": "#3d4a3d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#5c3800",
+                        "outline": "#6d7b6c",
+                        "on-primary-fixed": "#002109",
+                        "surface-container-highest": "#dce5d9",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001a42",
+                        "on-secondary-container": "#fefcff",
+                        "outline-variant": "#bccbb9",
+                        "surface": "#f3fcef",
+                        "inverse-on-surface": "#ebf3e7",
+                        "on-primary-fixed-variant": "#005321",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#f3fcef",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-container-high": "#e2ebde",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#161d16",
+                        "inverse-primary": "#4ae176",
+                        "primary": "#006e2f",
+                        "surface-variant": "#dce5d9",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f3fcef",
+                        "secondary-container": "#2170e4",
+                        "secondary": "#0058be"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "2xl": "64px",
+                        "margin-desktop": "48px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "display": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "mono": ["13px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .task-row:hover .task-actions {
+            opacity: 1;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bccbb9;
+            border-radius: 10px;
+        }
+        /* Smooth scale interaction for buttons */
+        .btn-active:active { transform: scale(0.98); }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface border-r border-outline-variant flex flex-col py-md px-sm z-50">
+<div class="flex items-center gap-sm px-md mb-xl">
+<div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-md">bolt</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">GRAPHODO</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Productivity Platform</p>
+</div>
+</div>
+<nav class="flex-1 space-y-xs overflow-y-auto custom-scrollbar">
+<!-- Navigation Items Mapping from JSON -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary font-semibold border-r-2 border-primary bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">repeat</span>
+<span class="font-body-md">Habits</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-body-md">Calendar</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-body-md">Analytics</span>
+</a>
+<div class="pt-xl pb-sm px-md">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Categories</p>
+</div>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-body-md">Work</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-body-md">Personal</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-body-md">Health</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md px-sm space-y-xs">
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md">Profile</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant flex justify-between items-center px-gutter z-40 shadow-sm">
+<div class="flex items-center gap-md flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-md py-1.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search tasks, shortcuts (⌘K)..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-md ml-lg">
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant btn-active">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant btn-active">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<button class="text-body-md text-on-surface-variant hover:text-primary transition-colors px-md">Help</button>
+<button class="bg-primary-container text-on-primary-container font-semibold px-md py-1.5 rounded-lg hover:brightness-95 transition-all btn-active">Upgrade</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden cursor-pointer border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A close-up high-quality portrait of a professional woman with a friendly smile, dressed in a minimalist white blouse, against a clean light-gray studio background. The lighting is soft and natural, emphasizing the sophisticated, modern aesthetic of the productivity platform's user base." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXbgFJi65rGmk3MowRtJu03kcdyaJjGewf1NRUDS2X04827DX_cCuyAjx1k45ZZh8JU2aEY-ePIiigfl6O0Yt8R8_IVIj-RV7CibBSbd6WK6HLZpfOCgHNc9RbWkmPApJo8_j85kMqeFigMCcyEk8kjJQKKKYdh9kQ27OAYHm6KTud1cv8GgJJVSAjcPmUdwmVS4ztYOtNC_CiW6HhQtWNJpTNkc7hmAa7FtVBbXBU1lmSY4G_O_0">
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 mt-16 p-lg h-[calc(100vh-64px)] overflow-y-auto custom-scrollbar bg-background">
+<!-- Header Content -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Active Tasks</h2>
+<div class="flex items-center gap-md">
+<span class="text-body-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">event</span>
+                        Today, Oct 24
+                    </span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase tracking-wider">Focus Mode Off</span>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<div class="flex bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button class="px-md py-1.5 rounded-md bg-surface text-primary shadow-sm text-label-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">list</span>
+                        List
+                    </button>
+<button class="px-md py-1.5 rounded-md text-on-surface-variant hover:text-on-surface text-label-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+                        Board
+                    </button>
+</div>
+<button class="bg-primary text-white flex items-center gap-sm px-md py-2 rounded-lg font-semibold hover:brightness-110 transition-all btn-active">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    New Task
+                </button>
+</div>
+</div>
+<!-- Bento Layout with List and Productivity Widget -->
+<div class="grid grid-cols-12 gap-lg h-full content-start">
+<!-- Quick Filters & Search Section -->
+<div class="col-span-12 flex items-center gap-md pb-md overflow-x-auto custom-scrollbar no-scrollbar">
+<button class="flex items-center gap-sm px-md py-2 bg-surface-container border border-outline-variant rounded-full text-on-surface-variant hover:bg-surface-container-high transition-all text-body-md whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                    Priority: All
+                </button>
+<button class="flex items-center gap-sm px-md py-2 bg-surface-container border border-outline-variant rounded-full text-on-surface-variant hover:bg-surface-container-high transition-all text-body-md whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+                    Due: This Week
+                </button>
+<button class="flex items-center gap-sm px-md py-2 bg-surface-container border border-outline-variant rounded-full text-on-surface-variant hover:bg-surface-container-high transition-all text-body-md whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">label</span>
+                    Tags
+                </button>
+<div class="ml-auto flex items-center gap-sm text-outline text-body-md">
+<span>Sorted by Priority</span>
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<!-- Task List Main Area -->
+<div class="col-span-12 xl:col-span-9 space-y-md">
+<!-- Group: High Priority -->
+<section>
+<div class="flex items-center gap-sm mb-sm px-md">
+<span class="material-symbols-outlined text-error text-[18px]">priority_high</span>
+<h3 class="text-label-sm font-bold uppercase tracking-widest text-on-surface-variant">Critical Path</h3>
+<span class="ml-auto text-label-sm text-outline">3 Tasks</span>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden">
+<!-- Task Row 1 -->
+<div class="task-row flex items-center gap-md px-md py-lg border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center justify-center w-6 h-6 border-2 border-outline-variant rounded-full group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary opacity-0 group-hover:opacity-100">check</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-sm">
+<h4 class="text-body-lg font-semibold text-on-surface">Redesign Analytics Dashboard</h4>
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[10px] font-bold rounded uppercase">Work</span>
+</div>
+<div class="flex items-center gap-md mt-1 text-on-surface-variant text-body-md">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">format_list_bulleted</span> 4/12</span>
+<span class="flex items-center gap-1 text-error"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Today, 5:00 PM</span>
+</div>
+</div>
+<div class="flex items-center -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-surface bg-surface-container-highest overflow-hidden" title="Assigned to Alex">
+<img class="w-full h-full object-cover" data-alt="Small round avatar of a young man with glasses, looking professional, high-end photography, blurred office background, neutral color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCq48J-DU0ni_nWq9Iy2m07Z2Q7vTxeFj76De9SGKSlhOEHXWCPquAro9jn8C5FBeMRtknCHjhDJwOS4xHUxTPhJEqAWjg9tCHPvgWQI56J_tBX0K8awdStRAlq8HR9Gcy9pJdOrpl_78nE3dNb87uC9iYbYgOpzY-HkycBmkZP7Zyl6YAFYfUt0EVS5vJiiPz965mc3ca6QaMK2alefks16aCJbPwVCAC1cHT84wTyteOEOWBNQk">
+</div>
+<div class="w-7 h-7 rounded-full border-2 border-surface bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">+2</div>
+</div>
+<div class="task-actions opacity-0 flex items-center gap-sm transition-opacity">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-error"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<!-- Task Row 2 -->
+<div class="task-row flex items-center gap-md px-md py-lg border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center justify-center w-6 h-6 border-2 border-outline-variant rounded-full group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary opacity-0 group-hover:opacity-100">check</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-sm">
+<h4 class="text-body-lg font-semibold text-on-surface">Client Feedback Implementation</h4>
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[10px] font-bold rounded uppercase">Work</span>
+</div>
+<div class="flex items-center gap-md mt-1 text-on-surface-variant text-body-md">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">attachment</span> 3</span>
+<span class="flex items-center gap-1 text-error"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Tomorrow</span>
+</div>
+</div>
+<div class="task-actions opacity-0 flex items-center gap-sm transition-opacity">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Group: Personal -->
+<section>
+<div class="flex items-center gap-sm mb-sm px-md mt-xl">
+<span class="material-symbols-outlined text-tertiary text-[18px]">person</span>
+<h3 class="text-label-sm font-bold uppercase tracking-widest text-on-surface-variant">Personal Maintenance</h3>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden">
+<div class="task-row flex items-center gap-md px-md py-lg border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center justify-center w-6 h-6 border-2 border-outline-variant rounded-full group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary opacity-0 group-hover:opacity-100">check</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-sm">
+<h4 class="text-body-lg font-semibold text-on-surface">Grocery Shopping</h4>
+<span class="px-2 py-0.5 bg-tertiary/10 text-tertiary text-[10px] font-bold rounded uppercase">Personal</span>
+</div>
+<div class="flex items-center gap-md mt-1 text-on-surface-variant text-body-md">
+<span class="flex items-center gap-1">Pills, Milk, Coffee</span>
+</div>
+</div>
+<div class="task-actions opacity-0 flex items-center gap-sm transition-opacity">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Side Widgets Area -->
+<div class="col-span-12 xl:col-span-3 space-y-lg">
+<!-- Productivity Micro-Widget -->
+<div class="bg-surface border border-outline-variant rounded-2xl p-lg relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-start mb-md">
+<h5 class="text-label-sm font-bold uppercase tracking-widest text-on-surface-variant">Focus Score</h5>
+<span class="text-primary font-bold text-headline-md">84</span>
+</div>
+<!-- Score Bar -->
+<div class="w-full h-2 bg-surface-container-highest rounded-full mb-md overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-700" style="width: 84%"></div>
+</div>
+<p class="text-body-md text-on-surface-variant leading-relaxed">
+                        You're in the top <span class="text-primary font-bold">5%</span> of performers today. 2 tasks remaining for daily goal.
+                    </p>
+<button class="mt-md w-full py-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-semibold rounded-lg text-body-md transition-colors btn-active">
+                        View History
+                    </button>
+</div>
+<!-- Upcoming Calendar Snip -->
+<div class="bg-surface border border-outline-variant rounded-2xl p-lg">
+<h5 class="text-label-sm font-bold uppercase tracking-widest text-on-surface-variant mb-md">Upcoming Events</h5>
+<div class="space-y-md">
+<div class="flex items-start gap-md">
+<div class="flex flex-col items-center justify-center w-10 py-1 bg-surface-container-highest rounded-lg">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Oct</span>
+<span class="text-body-lg font-bold text-on-surface">25</span>
+</div>
+<div>
+<h6 class="text-body-md font-semibold text-on-surface">Design Sync</h6>
+<p class="text-[12px] text-on-surface-variant">10:00 AM - 11:30 AM</p>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<div class="flex flex-col items-center justify-center w-10 py-1 bg-surface-container-highest rounded-lg">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Oct</span>
+<span class="text-body-lg font-bold text-on-surface">27</span>
+</div>
+<div>
+<h6 class="text-body-md font-semibold text-on-surface">Product Launch</h6>
+<p class="text-[12px] text-on-surface-variant">All Day Event</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Keyboard Shortcuts Quick Guide -->
+<div class="bg-surface-container-low border border-dashed border-outline-variant rounded-2xl p-md">
+<div class="flex items-center gap-sm mb-sm">
+<span class="material-symbols-outlined text-[18px] text-outline">keyboard</span>
+<span class="text-label-sm font-bold text-outline">Shortcuts</span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between text-[11px]">
+<span class="text-on-surface-variant">New Task</span>
+<span class="font-mono bg-surface-container-highest px-1 rounded">N</span>
+</div>
+<div class="flex justify-between text-[11px]">
+<span class="text-on-surface-variant">Search</span>
+<span class="font-mono bg-surface-container-highest px-1 rounded">/</span>
+</div>
+<div class="flex justify-between text-[11px]">
+<span class="text-on-surface-variant">Toggle Focus</span>
+<span class="font-mono bg-surface-container-highest px-1 rounded">F</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Task Input (Quick Add) - Keyboard First -->
+<div class="fixed bottom-lg left-1/2 -translate-x-1/2 w-full max-w-2xl px-md z-50">
+<div class="bg-surface/90 backdrop-blur-xl border border-outline-variant shadow-2xl rounded-2xl p-sm flex items-center gap-sm group focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-outline ml-md group-focus-within:text-primary">bolt</span>
+<input autofocus="" class="flex-1 bg-transparent border-none focus:ring-0 text-body-lg py-3 placeholder:text-outline-variant" placeholder="I want to..." type="text">
+<div class="flex items-center gap-sm pr-sm">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface-variant" title="Set Due Date">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface-variant" title="Assignee">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+</button>
+<button class="bg-primary text-white px-md py-1.5 rounded-lg font-bold text-body-md flex items-center gap-xs btn-active">
+                    Add <span class="text-[10px] opacity-70">↵</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden opacity-30">
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
+<div class="absolute top-[40%] -right-[5%] w-[30%] h-[30%] bg-secondary/10 rounded-full blur-[100px]" style="animation-delay: 2s;"></div>
+</div>
+<script>
+        // Micro-interaction for keyboard shortcut display
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'n' || e.key === 'N') {
+                // Potential to focus the bottom input
+                const quickAdd = document.querySelector('input[placeholder="I want to..."]');
+                if (quickAdd && document.activeElement !== quickAdd) {
+                    e.preventDefault();
+                    quickAdd.focus();
+                }
+            }
+        });
+
+        // Simple row selection logic
+        const rows = document.querySelectorAll('.task-row');
+        rows.forEach(row => {
+            row.addEventListener('click', (e) => {
+                // Don't trigger if a button was clicked
+                if (e.target.closest('button')) return;
+                
+                rows.forEach(r => r.classList.remove('bg-surface-container-high', 'border-l-4', 'border-primary'));
+                row.classList.add('bg-surface-container-high', 'border-l-4', 'border-primary');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GRAPHODO - Habit Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-surface": "#2a322a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#22c55e",
+                        "secondary-fixed": "#d8e2ff",
+                        "tertiary-container": "#ef9900",
+                        "surface-container-low": "#edf6ea",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "primary-fixed-dim": "#4ae176",
+                        "surface-container": "#e8f0e4",
+                        "tertiary": "#855300",
+                        "surface-dim": "#d4ddd0",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-background": "#161d16",
+                        "on-primary-container": "#004b1e",
+                        "surface-tint": "#006e2f",
+                        "primary-fixed": "#6bff8f",
+                        "on-surface-variant": "#3d4a3d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#5c3800",
+                        "outline": "#6d7b6c",
+                        "on-primary-fixed": "#002109",
+                        "surface-container-highest": "#dce5d9",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001a42",
+                        "on-secondary-container": "#fefcff",
+                        "outline-variant": "#bccbb9",
+                        "surface": "#f3fcef",
+                        "inverse-on-surface": "#ebf3e7",
+                        "on-primary-fixed-variant": "#005321",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#f3fcef",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-container-high": "#e2ebde",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#161d16",
+                        "inverse-primary": "#4ae176",
+                        "primary": "#006e2f",
+                        "surface-variant": "#dce5d9",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f3fcef",
+                        "secondary-container": "#2170e4",
+                        "secondary": "#0058be"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "2xl": "64px",
+                        "margin-desktop": "48px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "display": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "mono": ["13px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes fire-flicker {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ef9900); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 8px #ef9900); }
+        }
+        .animate-fire {
+            animation: fire-flicker 1.5s infinite ease-in-out;
+        }
+        .habit-success-pop {
+            animation: success-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes success-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+            100% { transform: scale(1); }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen">
+<!-- SideNavBar (from JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col py-md px-sm z-[60]">
+<div class="mb-xl px-md">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">GRAPHODO</h1>
+<p class="text-label-sm text-on-surface-variant opacity-70">Productivity Platform</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-body-md">Tasks</span>
+</a>
+<!-- Active Tab: Habits -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-primary dark:text-inverse-primary font-semibold border-r-2 border-primary bg-surface-container transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">repeat</span>
+<span class="font-body-md">Habits</span>
+</a>
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-body-md">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md">
+<button class="w-full py-md bg-primary-container text-on-primary-container font-semibold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                New Task
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar (from JSON) -->
+<header class="flex justify-between items-center h-16 px-gutter sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-md">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-md w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search habits..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm">
+<button class="px-md py-sm text-primary font-bold hover:text-primary transition-all">Upgrade</button>
+<button class="px-md py-sm text-on-surface-variant hover:text-primary transition-all">Help</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all">contrast</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young creative professional with a friendly expression, wearing a minimalist black turtleneck. The lighting is soft and directional, creating subtle shadows that define the facial features. The background is a clean, out-of-focus modern office space with soft green plants, matching the Graphodo brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsNoL-mKtnE5GKNWO3khKWDxZLDwqBrynO8GVZw-TYEos9OoB4OA32SLEx5-tfj2Uum0viimx-FmhRlUMAI88pVMDvyLXFiejqLrduduBtGGrnthsY4-aDpijZ4ilzJ0ZBHzk88vFP9DIeaCW-GedTbVdoqrOfwmrPbWs3WSraHpdIGG8JyoWRfpwo9ilTSfxh956VsHZYji93h2ruqDuLMd-rGDgYYL7osPh5LNKf1Ju-_Ovqrzw">
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-gutter space-y-lg">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Habit Evolution</h2>
+<p class="text-body-lg text-on-surface-variant">Consistency is the bridge between goals and accomplishment.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-2 bg-surface-container-high rounded-lg text-body-md font-semibold hover:bg-surface-container-highest transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">filter_list</span> Filters
+                    </button>
+<button class="px-md py-2 bg-primary text-on-primary rounded-lg text-body-md font-semibold hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">add</span> Create Habit
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Summary Card: Consistency Rate -->
+<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-lg flex flex-col justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Consistency Rate</h3>
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Current Month • March</p>
+</div>
+<div class="py-xl flex flex-col items-center">
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="43.7" stroke-width="8"></circle>
+</svg>
+<span class="absolute text-headline-lg font-black text-on-surface">88%</span>
+</div>
+<div class="mt-md flex items-center gap-2 text-primary font-semibold">
+<span class="material-symbols-outlined">trending_up</span>
+<span>+12% from last month</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="p-sm bg-surface-container-low rounded-lg">
+<p class="text-label-sm text-on-surface-variant">Best Streak</p>
+<p class="text-body-lg font-bold">14 Days</p>
+</div>
+<div class="p-sm bg-surface-container-low rounded-lg">
+<p class="text-label-sm text-on-surface-variant">Completed</p>
+<p class="text-body-lg font-bold">124 / 140</p>
+</div>
+</div>
+</div>
+<!-- Habits List Section -->
+<div class="col-span-12 lg:col-span-8 space-y-md">
+<div class="flex items-center justify-between px-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">Daily Check-in</h3>
+<div class="text-body-md text-on-surface-variant">Wednesday, March 15</div>
+</div>
+<!-- Habit Row: Hydrate -->
+<div class="group glass-card rounded-xl p-md flex items-center justify-between transition-all hover:shadow-md cursor-pointer border-l-4 border-l-blue-400" id="habit-hydrate">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div>
+<h4 class="font-headline-md text-on-surface leading-tight">Hydrate</h4>
+<p class="text-body-md text-on-surface-variant">Goal: 2.5 Liters daily</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary-container animate-fire" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-bold text-headline-md">8</span>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-outline-variant flex items-center justify-center group-hover:border-primary-container transition-all" onclick="toggleHabit('habit-hydrate')">
+<span class="material-symbols-outlined text-transparent select-none">check</span>
+</button>
+</div>
+</div>
+<!-- Habit Row: Read -->
+<div class="group glass-card rounded-xl p-md flex items-center justify-between transition-all hover:shadow-md cursor-pointer border-l-4 border-l-orange-400" id="habit-read">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+<div>
+<h4 class="font-headline-md text-on-surface leading-tight">Read</h4>
+<p class="text-body-md text-on-surface-variant">Goal: 30 minutes daily</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary-container animate-fire" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-bold text-headline-md">21</span>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-outline-variant flex items-center justify-center group-hover:border-primary-container transition-all" onclick="toggleHabit('habit-read')">
+<span class="material-symbols-outlined text-transparent select-none">check</span>
+</button>
+</div>
+</div>
+<!-- Habit Row: Meditate -->
+<div class="group glass-card rounded-xl p-md flex items-center justify-between transition-all hover:shadow-md cursor-pointer border-l-4 border-l-purple-400" id="habit-meditate">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">self_improvement</span>
+</div>
+<div>
+<h4 class="font-headline-md text-on-surface leading-tight">Meditate</h4>
+<p class="text-body-md text-on-surface-variant">Goal: 10 minutes daily</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary-container animate-fire" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-bold text-headline-md">3</span>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-outline-variant flex items-center justify-center group-hover:border-primary-container transition-all" onclick="toggleHabit('habit-meditate')">
+<span class="material-symbols-outlined text-transparent select-none">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Monthly Heatmap / Progress Area -->
+<div class="col-span-12 glass-card rounded-xl p-lg">
+<div class="flex items-center justify-between mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Weekly Progress Distribution</h3>
+<div class="flex gap-2">
+<button class="px-sm py-1 rounded bg-surface-container-highest text-label-sm font-bold">Week</button>
+<button class="px-sm py-1 rounded text-label-sm font-medium opacity-60">Month</button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-md">
+<!-- Mon -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container rounded-lg relative overflow-hidden flex flex-col justify-end">
+<div class="w-full bg-primary-container h-[90%] rounded-t-sm"></div>
+</div>
+<span class="text-label-sm font-bold">MON</span>
+</div>
+<!-- Tue -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container rounded-lg relative overflow-hidden flex flex-col justify-end">
+<div class="w-full bg-primary-container h-[100%] rounded-t-sm"></div>
+</div>
+<span class="text-label-sm font-bold">TUE</span>
+</div>
+<!-- Wed (Today) -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container-high rounded-lg relative overflow-hidden flex flex-col justify-end ring-2 ring-primary ring-offset-2 ring-offset-surface">
+<div class="w-full bg-primary-container h-[33%] rounded-t-sm transition-all duration-500" id="wed-progress"></div>
+</div>
+<span class="text-label-sm font-bold text-primary">WED</span>
+</div>
+<!-- Thu -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container rounded-lg relative overflow-hidden flex flex-col justify-end">
+<div class="w-full bg-primary-container h-[0%] rounded-t-sm"></div>
+</div>
+<span class="text-label-sm font-bold">THU</span>
+</div>
+<!-- Fri -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container rounded-lg relative overflow-hidden flex flex-col justify-end">
+<div class="w-full bg-primary-container h-[0%] rounded-t-sm"></div>
+</div>
+<span class="text-label-sm font-bold">FRI</span>
+</div>
+<!-- Sat -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container rounded-lg relative overflow-hidden flex flex-col justify-end">
+<div class="w-full bg-primary-container h-[0%] rounded-t-sm"></div>
+</div>
+<span class="text-label-sm font-bold">SAT</span>
+</div>
+<!-- Sun -->
+<div class="space-y-sm text-center">
+<div class="h-48 w-full bg-surface-container rounded-lg relative overflow-hidden flex flex-col justify-end">
+<div class="w-full bg-primary-container h-[0%] rounded-t-sm"></div>
+</div>
+<span class="text-label-sm font-bold">SUN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Success Toast Container (Hidden by default) -->
+<div class="fixed bottom-lg right-lg translate-y-24 opacity-0 transition-all duration-300 z-[100]" id="toast">
+<div class="bg-surface-container-lowest border-l-4 border-l-primary shadow-2xl rounded-lg p-md flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined">celebration</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Habit Completed!</p>
+<p class="text-body-md text-on-surface-variant">Keep up the momentum.</p>
+</div>
+</div>
+</div>
+<script>
+        const habits = {
+            'habit-hydrate': false,
+            'habit-read': false,
+            'habit-meditate': false
+        };
+
+        function toggleHabit(id) {
+            const el = document.getElementById(id);
+            const btn = el.querySelector('button');
+            const checkIcon = btn.querySelector('.material-symbols-outlined');
+            const wedProgress = document.getElementById('wed-progress');
+            
+            habits[id] = !habits[id];
+
+            if (habits[id]) {
+                // Success State
+                el.classList.add('habit-success-pop');
+                el.classList.replace('glass-card', 'bg-primary-container/10');
+                btn.classList.replace('border-outline-variant', 'bg-primary-container');
+                btn.classList.remove('border-2');
+                checkIcon.classList.replace('text-transparent', 'text-on-primary-container');
+                
+                showToast();
+                updateProgress();
+
+                setTimeout(() => {
+                    el.classList.remove('habit-success-pop');
+                }, 400);
+            } else {
+                // Reset State
+                el.classList.replace('bg-primary-container/10', 'glass-card');
+                btn.classList.replace('bg-primary-container', 'border-outline-variant');
+                btn.classList.add('border-2');
+                checkIcon.classList.replace('text-on-primary-container', 'text-transparent');
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const completedCount = Object.values(habits).filter(v => v).length;
+            const progress = (completedCount / 3) * 100;
+            document.getElementById('wed-progress').style.height = `${progress === 0 ? 33 : progress}%`;
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body></html>
