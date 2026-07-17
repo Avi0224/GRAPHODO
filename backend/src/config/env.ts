@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  PORT: z.string().transform(Number).default('5000'),
+  PORT: z.string().default('5000').transform(Number),
   MONGODB_URI: z.string().url().default('mongodb://127.0.0.1:27017/graphodo'),
   JWT_ACCESS_SECRET: z.string().min(32).default('supersecret_accesstoken_mustbe_32chars'),
   JWT_REFRESH_SECRET: z.string().min(32).default('supersecret_refreshtoken_mustbe_32chars'),
