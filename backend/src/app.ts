@@ -6,7 +6,9 @@ import helmet from 'helmet';
 import cors from 'cors';
 import mongoSanitize from 'express-mongo-sanitize';
 import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 import { env } from './config/env';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 
@@ -23,6 +25,7 @@ app.use(cors({
 // Body parsing
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // NoSQL injection prevention
 app.use(mongoSanitize());
@@ -35,6 +38,9 @@ const globalLimiter = rateLimit({
   legacyHeaders: false 
 });
 app.use('/api', globalLimiter);
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'ok', message: 'Graphodo API is running' });
