@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { User, IUser } from '../models/User';
 import { env } from '../config/env';
@@ -31,7 +31,7 @@ const setTokenCookies = (res: Response, accessToken: string, refreshToken: strin
   });
 };
 
-export const register = async (req: Request, res: Response): Promise<void> => {
+export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, password } = req.body;
 
@@ -69,11 +69,11 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ status: 'error', message: 'Invalid user data' });
     }
   } catch (error: any) {
-    res.status(500).json({ status: 'error', message: error.message });
+    next(error);
   }
 };
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { email, password } = req.body;
 
@@ -100,7 +100,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       res.status(401).json({ status: 'error', message: 'Invalid email or password' });
     }
   } catch (error: any) {
-    res.status(500).json({ status: 'error', message: error.message });
+    next(error);
   }
 };
 
@@ -117,7 +117,7 @@ export const logout = (req: Request, res: Response) => {
   res.status(200).json({ status: 'success', message: 'Logged out successfully' });
 };
 
-export const me = async (req: Request, res: Response): Promise<void> => {
+export const me = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const user = await User.findById(req.user?._id);
 
@@ -134,11 +134,11 @@ export const me = async (req: Request, res: Response): Promise<void> => {
       res.status(404).json({ status: 'error', message: 'User not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ status: 'error', message: error.message });
+    next(error);
   }
 };
 
-export const refresh = async (req: Request, res: Response): Promise<void> => {
+export const refresh = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const refreshToken = req.cookies.refreshToken;
 
@@ -160,6 +160,6 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json({ status: 'success', message: 'Token refreshed' });
   } catch (error) {
-    res.status(401).json({ status: 'error', message: 'Not authorized, refresh token failed' });
+    next(error);
   }
 };

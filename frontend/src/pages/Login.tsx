@@ -38,7 +38,8 @@ const Login: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to login');
+      const errorMessage = err.response?.data?.message;
+      setError(Array.isArray(errorMessage) ? errorMessage[0] : (errorMessage || 'Failed to login'));
     } finally {
       setIsSubmitting(false);
     }
