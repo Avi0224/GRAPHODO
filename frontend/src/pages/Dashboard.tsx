@@ -5,7 +5,7 @@ import { useUpdateTask } from '../features/tasks/api';
 import { Loader2 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
-  const { user } = useAuth();
+  useAuth();
   const circleRef = useRef<SVGCircleElement>(null);
   
   const { data, isLoading } = useDashboardData();
