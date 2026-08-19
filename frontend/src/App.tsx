@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
 import AppLayout from './components/layout/AppLayout';
@@ -37,6 +37,8 @@ function App() {
                 <Route path="/settings" element={<div className="p-4">Settings Coming Soon</div>} />
               </Route>
             </Route>
+            
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
