@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.env = void 0;
+require("dotenv/config");
 const zod_1 = require("zod");
 const envSchema = zod_1.z.object({
     NODE_ENV: zod_1.z.enum(['development', 'production', 'test']).default('development'),
     PORT: zod_1.z.string().default('5000').transform(Number),
-    MONGODB_URI: zod_1.z.string().url().default('mongodb://127.0.0.1:27017/graphodo'),
+    MONGODB_URI: zod_1.z.string().default('mongodb://127.0.0.1:27017/graphodo'),
     JWT_ACCESS_SECRET: zod_1.z.string().min(32).default('supersecret_accesstoken_mustbe_32chars'),
     JWT_REFRESH_SECRET: zod_1.z.string().min(32).default('supersecret_refreshtoken_mustbe_32chars'),
     JWT_ACCESS_EXPIRES_IN: zod_1.z.string().default('15m'),

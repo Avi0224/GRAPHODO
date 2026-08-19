@@ -20,17 +20,17 @@ const setTokenCookies = (res, accessToken, refreshToken) => {
     res.cookie('jwt', accessToken, {
         httpOnly: true,
         secure: env_1.env.NODE_ENV === 'production',
-        sameSite: env_1.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        sameSite: env_1.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 15 * 60 * 1000, // 15 minutes
     });
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: env_1.env.NODE_ENV === 'production',
-        sameSite: env_1.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        sameSite: env_1.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 };
-const register = async (req, res) => {
+const register = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
@@ -64,11 +64,11 @@ const register = async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json({ status: 'error', message: error.message });
+        next(error);
     }
 };
 exports.register = register;
-const login = async (req, res) => {
+const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -93,7 +93,7 @@ const login = async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json({ status: 'error', message: error.message });
+        next(error);
     }
 };
 exports.login = login;
@@ -109,7 +109,7 @@ const logout = (req, res) => {
     res.status(200).json({ status: 'success', message: 'Logged out successfully' });
 };
 exports.logout = logout;
-const me = async (req, res) => {
+const me = async (req, res, next) => {
     try {
         const user = await User_1.User.findById(req.user?._id);
         if (user) {
@@ -127,11 +127,11 @@ const me = async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json({ status: 'error', message: error.message });
+        next(error);
     }
 };
 exports.me = me;
-const refresh = async (req, res) => {
+const refresh = async (req, res, next) => {
     try {
         const refreshToken = req.cookies.refreshToken;
         if (!refreshToken) {
@@ -149,7 +149,7 @@ const refresh = async (req, res) => {
         res.status(200).json({ status: 'success', message: 'Token refreshed' });
     }
     catch (error) {
-        res.status(401).json({ status: 'error', message: 'Not authorized, refresh token failed' });
+        next(error);
     }
 };
 exports.refresh = refresh;
