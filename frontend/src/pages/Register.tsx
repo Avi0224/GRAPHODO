@@ -35,8 +35,7 @@ const Register: React.FC = () => {
     try {
       const response = await api.post('/auth/register', data);
       if (response.data.status === 'success') {
-        setUser(response.data.user);
-        navigate('/dashboard');
+        window.location.href = '/dashboard';
       }
     } catch (err: any) {
       const errorMessage = err.response?.data?.message;
