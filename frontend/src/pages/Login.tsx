@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { checkAuth } = useAuth();
+  const { setUser } = useAuth();
 
   const {
     register,
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     try {
       const response = await api.post('/auth/login', data);
       if (response.data.status === 'success') {
-        await checkAuth();
+        setUser(response.data.user);
         navigate('/dashboard');
       }
     } catch (err: any) {
