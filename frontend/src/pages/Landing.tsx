@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Landing: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -105,17 +106,29 @@ void main() {
           const uRes = (gl as WebGLRenderingContext).getUniformLocation(prog, 'u_resolution');
 
           let animationFrameId: number;
+          let isVisible = true;
+
+          const observer = new IntersectionObserver((entries) => {
+            if (entries[0]) {
+              isVisible = entries[0].isIntersecting;
+            }
+          }, { threshold: 0 });
+          observer.observe(canvas);
+
           const render = (t: number) => {
-            (gl as WebGLRenderingContext).viewport(0, 0, canvas.width, canvas.height);
-            if (uTime) (gl as WebGLRenderingContext).uniform1f(uTime, t * 0.001);
-            if (uRes) (gl as WebGLRenderingContext).uniform2f(uRes, canvas.width, canvas.height);
-            (gl as WebGLRenderingContext).drawArrays((gl as WebGLRenderingContext).TRIANGLE_STRIP, 0, 4);
+            if (isVisible) {
+              (gl as WebGLRenderingContext).viewport(0, 0, canvas.width, canvas.height);
+              if (uTime) (gl as WebGLRenderingContext).uniform1f(uTime, t * 0.001);
+              if (uRes) (gl as WebGLRenderingContext).uniform2f(uRes, canvas.width, canvas.height);
+              (gl as WebGLRenderingContext).drawArrays((gl as WebGLRenderingContext).TRIANGLE_STRIP, 0, 4);
+            }
             animationFrameId = requestAnimationFrame(render);
           };
           render(0);
 
           return () => {
             cancelAnimationFrame(animationFrameId);
+            observer.disconnect();
             if (resizeObserver) resizeObserver.disconnect();
           };
         }
@@ -128,7 +141,13 @@ void main() {
   }, []);
 
   return (
-    <div className="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen bg-surface">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen bg-surface"
+    >
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-gutter md:px-margin-desktop bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 transition-all duration-300">
         <div className="flex items-center gap-sm">
@@ -364,7 +383,7 @@ void main() {
           </div>
         </div>
       </footer>
-    </div>
+    </motion.div>
   );
 };
 

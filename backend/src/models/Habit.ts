@@ -60,4 +60,8 @@ const HabitSchema: Schema<IHabit> = new Schema(
   }
 );
 
+// Performance Indexes
+HabitSchema.index({ user: 1 });
+HabitSchema.index({ user: 1, currentStreak: -1 });
+
 export const Habit = mongoose.model<IHabit>('Habit', HabitSchema);

@@ -1,0 +1,10 @@
+# General
+.DS_Store
+.env
+.env.*
+*.log
+cookies.txt
+
+# Editor
+.vscode/
+.idea/

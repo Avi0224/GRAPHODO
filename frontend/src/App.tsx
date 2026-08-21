@@ -11,6 +11,36 @@ import TasksPage from './pages/Tasks';
 import Habits from './pages/Habits';
 import Analytics from './pages/Analytics';
 import Landing from './pages/Landing';
+import { AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route element={<PublicRoute />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/habits" element={<Habits />} />
+            <Route path="/calendar" element={<div className="p-4">Calendar Coming Soon</div>} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<div className="p-4">Settings Coming Soon</div>} />
+          </Route>
+        </Route>
+        
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 const queryClient = new QueryClient();
 
@@ -19,27 +49,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
-            <Route element={<PublicRoute />}>
-              <Route path="/" element={<Landing />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </Route>
-            
-            <Route element={<ProtectedRoute />}>
-              <Route element={<AppLayout />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                {/* Future routes */}
-                <Route path="/tasks" element={<TasksPage />} />
-                <Route path="/habits" element={<Habits />} />
-                <Route path="/calendar" element={<div className="p-4">Calendar Coming Soon</div>} />
-                <Route path="/analytics" element={<Analytics />} />
-                <Route path="/settings" element={<div className="p-4">Settings Coming Soon</div>} />
-              </Route>
-            </Route>
-            
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <AnimatedRoutes />
         </BrowserRouter>
       </AuthProvider>
     </QueryClientProvider>

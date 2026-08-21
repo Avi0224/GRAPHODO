@@ -85,4 +85,8 @@ const TaskSchema: Schema<ITask> = new Schema(
   }
 );
 
+// Performance Indexes
+TaskSchema.index({ user: 1, status: 1 });
+TaskSchema.index({ user: 1, dueDate: 1 });
+
 export const Task = mongoose.model<ITask>('Task', TaskSchema);

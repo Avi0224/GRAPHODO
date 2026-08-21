@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useDashboardData } from '../features/dashboard/api';
 import { useUpdateTask } from '../features/tasks/api';
 import { Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Dashboard: React.FC = () => {
   useAuth();
@@ -52,7 +53,12 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Top Section: Welcome & Bento Stats */}
       <div className="grid grid-cols-12 gap-lg mb-lg">
         {/* Large Ambient Progress Graph Card */}
@@ -181,7 +187,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       <div id="toast-container" className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
-    </>
+    </motion.div>
   );
 };
 

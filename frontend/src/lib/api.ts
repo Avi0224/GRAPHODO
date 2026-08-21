@@ -11,6 +11,10 @@ export const api = axios.create({
 // Response interceptor for handling 401s and refreshing tokens
 api.interceptors.response.use(
   (response) => {
+    // Detect if Vercel returned an HTML page (usually means API path fallback)
+    if (typeof response.data === 'string' && response.data.trim().startsWith('<!DOCTYPE html>')) {
+      return Promise.reject(new Error('Received HTML instead of JSON. Ensure your API URL is correctly configured.'));
+    }
     return response;
   },
   async (error) => {
